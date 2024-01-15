@@ -7,7 +7,7 @@ on:
 
 jobs:
   hello_world:
-    runs-on: [self-hosted, linux, x64] # Reemplaza con las etiquetas adecuadas de tu runner auto-hospedado
+    runs-on: [self-hosted, linux, x64] 
     steps:
       - name: Echo the message
         run: |
