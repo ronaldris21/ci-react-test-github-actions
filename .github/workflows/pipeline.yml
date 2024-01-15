@@ -47,7 +47,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: 'npm'
-          node-version: '14'
+          node-version: '16'
       - name: Install dependencies
         run: npm ci
       - name: Build
@@ -85,33 +85,23 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      # Checkout project repository
       - name: Checkout
-        uses: actions/checkout@v3
-
-      # Setup Node.js environment
+        uses: actions/checkout@v2  # Manteniendo la misma versión para la consistencia
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2  # Manteniendo la misma versión para la consistencia
         with:
-          node-version: '16.x'
-
-      # Install dependencies
+          node-version: '16.x'  # Manteniendo la misma versión de Node.js
       - name: Install dependencies
-        run: yarn install --prefer-offline
-
-      # Build Application
+        run: npm ci  # Cambiado a npm para mantener la consistencia
       - name: Build application
-        run: yarn build
-
-      # Deploy to Github Pages
+        run: npm run build  # Usando npm para mantener la consistencia
       - id: deploy
         name: Deploy to Github Pages
         uses: fcodelabs/react-deploy-github-pages-action@v1.0.0
         with:
-          build_dir: dist
+          build_dir: dist  # Asegúrate de que este sea el directorio correcto donde se generan los archivos de compilación
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
 
 
