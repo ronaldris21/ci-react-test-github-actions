@@ -73,7 +73,7 @@ jobs:
         run: npm test
 
   e2e:
-    needs: [lint, build]
+    needs: [test]
     runs-on: [self-hosted, linux, x64] 
     steps:
       - uses: actions/checkout@v2
