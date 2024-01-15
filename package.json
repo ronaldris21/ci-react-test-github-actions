@@ -3,6 +3,7 @@
   "version": "1.0.4",
   "description": "Full Stack Open",
   "main": "src/index.js",
+  "homepage": "https://ronaldris21.github.io/ci-react-test-github-actions",
   "scripts": {
     "dev": "webpack-dev-server --open --mode development",
     "start-test": "NODE_ENV=test node app.js",
@@ -24,7 +25,6 @@
   "bugs": {
     "url": "https://github.com/smartlyio/fullstackopen-cicd/issues"
   },
-  "homepage": "https://github.com/smartlyio/fullstackopen-cicd#readme",
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-transform-runtime": "^7.10.0",
