@@ -22,20 +22,20 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-  # lint:
-  #   runs-on: [self-hosted, linux, x64] 
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 0
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         cache: 'npm'
-  #         node-version: '14'
-  #     - name: Install dependencies
-  #       run: npm ci
-  #     - name: Lint
-  #       run: npm run eslint
+  lint:
+    runs-on: [self-hosted, linux, x64] 
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          cache: 'npm'
+          node-version: '14'
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run eslint
      
 
   build:
@@ -57,25 +57,25 @@ jobs:
           name: dist
           path: dist
 
-  # test:
-  #   needs: [lint, build]
-  #   runs-on: [self-hosted, linux, x64] 
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 0
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         cache: 'npm'
-  #         node-version: '14'
-  #     - name: Install dependencies
-  #       run: npm ci
-  #     - uses: actions/download-artifact@v2
-  #       with:
-  #         name: dist
-  #         path: dist
-  #     - name: Test
-  #       run: npm test
+  test:
+    needs: [lint, build]
+    runs-on: [self-hosted, linux, x64] 
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          cache: 'npm'
+          node-version: '14'
+      - name: Install dependencies
+        run: npm ci
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: Test
+        run: npm test
 
 
   deployFAST:
@@ -129,39 +129,39 @@ jobs:
   # #         start: npm run start-test
   # #         wait-on: http://localhost:5000
 
-  # # e2e:
-  # #   needs: [test]
-  # #   runs-on: [self-hosted, linux, x64]
-  # #   steps:
-  # #     - uses: actions/checkout@v2
-  # #       with:
-  # #         fetch-depth: 0
-  # #     - uses: actions/setup-node@v2
-  # #       with:
-  # #         cache: 'npm'
-  # #         node-version: '14'
-  # #     - name: Install dependencies
-  # #       run: npm ci
-  # #     - uses: actions/download-artifact@v2
-  # #       with:
-  # #         name: dist
-  # #         path: dist
-  # #     - name: Start Server
-  # #       run: npm run start-test &
-  # #     - name: E2E tests
-  # #       uses: cypress-io/github-action@v2
-  # #       with:
-  # #         command: npm run test:e2e
-  # #         wait-on: http://localhost:5000
-  # #         wait-on-timeout: 60 # Espera hasta 60 segundos para que el servidor esté listo
+  e2e:
+    needs: [test]
+    runs-on: [self-hosted, linux, x64]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          cache: 'npm'
+          node-version: '14'
+      - name: Install dependencies
+        run: npm ci
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: Start Server
+        run: npm run start-test &
+      - name: E2E tests
+        uses: cypress-io/github-action@v2
+        with:
+          command: npm run test:e2e
+          wait-on: http://localhost:5000
+          wait-on-timeout: 180 # Espera hasta 60 segundos para que el servidor esté listo
   
-  # deploy:
-  #   needs: [test]
-  #   runs-on: [self-hosted, linux, x64]
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Build and Deploy React app to GitHub Pages
-  #     uses: omkartapale/react-deployment-gh-pages@v1.0.0
+  deployGHPages:
+    needs: [test]
+    runs-on: [self-hosted, linux, x64]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and Deploy React app to GitHub Pages
+      uses: omkartapale/react-deployment-gh-pages@v1.0.0
 
   # # deploy:
   # #   needs: [test, e2e]
