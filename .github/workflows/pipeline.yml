@@ -14,13 +14,13 @@ permissions:
     
 jobs:
 
-  # avoid_reduncy:
-  #   runs-on: [self-hosted, linux, x64] 
-  #   steps:
-  #     - name: Cancel Previous Redundant Builds
-  #       uses: styfle/cancel-workflow-action@0.9.1
-  #       with:
-  #         access_token: ${{ github.token }}
+  avoid_reduncy:
+    runs-on: [self-hosted, linux, x64] 
+    steps:
+      - name: Cancel Previous Redundant Builds
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
 
   # lint:
   #   runs-on: [self-hosted, linux, x64] 
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: 'npm'
-          node-version: '16'
+          node-version: '14'
       - name: Install dependencies
         run: npm ci
       - name: Build
@@ -90,7 +90,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2  # Manteniendo la misma versión para la consistencia
         with:
-          node-version: '16.x'  # Manteniendo la misma versión de Node.js
+          node-version: '14.x'  # Manteniendo la misma versión de Node.js
       - name: Install dependencies
         run: npm ci  # Cambiado a npm para mantener la consistencia
       - name: Build application
